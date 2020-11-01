@@ -12,15 +12,22 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.http.client.utils.URIBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
+@RestController
 @Slf4j
 public class TmdbApiImpl implements TmdbApi {
     @Value("${tmdb.apikey}")
@@ -53,17 +60,24 @@ public class TmdbApiImpl implements TmdbApi {
         return response.getBody();
     }
 
-    @Override
-    public Actor getActor(Long actorId) {
-        String url = getTmdbUrl("/person/" + actorId);
-        ResponseEntity<Actor> response = restTemplate.getForEntity(url, Actor.class);
-
-        if (!response.getStatusCode().is2xxSuccessful()) {
-            return null;
-        }
-
-        return response.getBody();
+    public Actor findActorById(Long actorId) {
+        String url = getTmdbUrl("person", actorId.toString());
+        ResponseEntity<Actor> responseEntity = restTemplate
+                .exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<Actor>() {});
+        return responseEntity.getBody();
     }
+
+//    @Override
+//    public Actor getActor(Long actorId) {
+//        String url = getTmdbUrl("/person/" + actorId);
+//        ResponseEntity<Actor> response = restTemplate.getForEntity(url, Actor.class);
+//
+//        if (!response.getStatusCode().is2xxSuccessful()) {
+//            return null;
+//        }
+//
+//        return response.getBody();
+//    }
 
     @Override
     public TVShow getTVShowById(Long tvShowId) {
@@ -107,5 +121,14 @@ public class TmdbApiImpl implements TmdbApi {
             throw new TmdbException("Can't get tmdb url", e);
         }
 
+    }
+
+    private String getTmdbUrl(String... path) {
+        return UriComponentsBuilder
+                .fromUriString(tmdbApiBaseUrl)
+                .pathSegment(path)
+                .queryParam("language", tmdbLanguage)
+                .queryParam("api_key", tmdbApiKey)
+                .build().toUriString();
     }
 }

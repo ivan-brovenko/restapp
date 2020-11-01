@@ -21,15 +21,15 @@ public class TVController {
     @Autowired
     private TmdbApi tmdbApi;
 
-    @RequestMapping(value = "/popular", method = POST)
-    public ResponseEntity popular(@RequestParam String email,
-                                  @RequestParam String password) {
-        if (userService.findUser(email, password) == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-        }
-
-        String popularMovies = tmdbApi.popularTVShows();
-
-        return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(popularMovies);
-    }
+//    @RequestMapping(value = "/popular", method = POST)
+//    public ResponseEntity popular(@RequestParam String email,
+//                                  @RequestParam String password) {
+//        if (userService.findUser(email, password) == null) {
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+//        }
+//
+//        String popularMovies = tmdbApi.popularTVShows();
+//
+//        return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(popularMovies);
+//    }
 }

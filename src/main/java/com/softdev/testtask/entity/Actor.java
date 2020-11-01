@@ -23,10 +23,9 @@ public class Actor {
     private Long id;
 
     private String name;
+    private String birthday;
+    private String deathday;
 
-    @ManyToMany
-    @JoinTable(name = "actor_user",
-            joinColumns = {@JoinColumn(name = "actor_id")},
-            inverseJoinColumns = {@JoinColumn(name = "user_id")})
+    @ManyToMany(mappedBy = "actors")
     private Set<User> users;
 }

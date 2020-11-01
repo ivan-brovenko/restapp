@@ -8,7 +8,7 @@ import java.util.List;
 public interface TmdbApi {
     String popularTVShows();
 
-    Actor getActor(Long actorId);
+    Actor findActorById(Long actorId);
 
     TVShow getTVShowById(Long tvShowId);
 

@@ -24,9 +24,14 @@ public class User {
 
     private String password;
 
-    @ManyToMany(mappedBy = "users")
-    private Set<Actor> favouriteActors;
+    @ManyToMany
+    @JoinTable(name = "users_actors",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "actor_id")})
+    private Set<Actor> actors;
 
-    @ManyToMany(mappedBy = "users")
-    private Set<TVShow> watchedTVShows;
+
+//
+//    @ManyToMany(mappedBy = "users")
+//    private Set<TVShow> watchedTVShows;
 }
