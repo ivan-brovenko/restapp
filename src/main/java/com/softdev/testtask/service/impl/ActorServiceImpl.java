@@ -7,6 +7,8 @@ import com.softdev.testtask.service.tmdb.TmdbApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ActorServiceImpl implements ActorService {
     private ActorRepository actorRepository;
@@ -19,8 +21,6 @@ public class ActorServiceImpl implements ActorService {
 
     @Override
     public Actor addActor(Actor actor) {
-        actorRepository.save(actor);
-
         return null;
     }
 }

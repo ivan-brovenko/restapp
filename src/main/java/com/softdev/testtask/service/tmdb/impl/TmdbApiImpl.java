@@ -16,6 +16,7 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -60,7 +61,8 @@ public class TmdbApiImpl implements TmdbApi {
         return response.getBody();
     }
 
-    public Actor findActorById(Long actorId) {
+    @RequestMapping(value = "/actors/{id}")
+    public Actor findActorById(@PathVariable("id") Long actorId) {
         String url = getTmdbUrl("person", actorId.toString());
         ResponseEntity<Actor> responseEntity = restTemplate
                 .exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<Actor>() {});

@@ -14,7 +14,7 @@ public interface UserService {
 
     List<User> findAllUsers();
 
-    User addActors(String userEmail, List<Actor> actors);
+    User addActors(String userEmail, List<Long> actorIds);
 
 //    User addFavouriteActor(Long actorId, String email, String password);
 //

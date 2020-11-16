@@ -25,15 +25,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/users")
 public class UserControllerV1 {
-
-    @Autowired
     private UserService userService;
 
     @Autowired
-    private TmdbApi tmdbApi;
-
-    @Autowired
-    private ObjectMapper objectMapper;
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE,
@@ -43,18 +40,18 @@ public class UserControllerV1 {
         return ResponseEntity.status(HttpStatus.OK).body(registeredUser);
     }
 
-    @RequestMapping(method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<User> users() {
-        return userService.findAllUsers();
-    }
-
-    @RequestMapping(value = "/{userEmail}/actors", method = RequestMethod.POST,
-            consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public User addActors(@PathVariable String userEmail, @RequestBody List<Actor> actors) {
-        return userService.addActors(userEmail, actors);
-    }
+//    @RequestMapping(method = RequestMethod.GET,
+//            produces = MediaType.APPLICATION_JSON_VALUE)
+//    public List<User> users() {
+//        return userService.findAllUsers();
+//    }
+//
+//    @RequestMapping(value = "/{userEmail}/actors", method = RequestMethod.POST,
+//            consumes = MediaType.APPLICATION_JSON_VALUE,
+//            produces = MediaType.APPLICATION_JSON_VALUE)
+//    public User addActors(@PathVariable String userEmail, @RequestBody List<Long> actorsIds) {
+//        return userService.addActors(userEmail, actorsIds);
+//    }
 
 //    @RequestMapping(value = "/{userId}/actors", method = RequestMethod.POST)
 //    public ResponseEntity addFavouriteActorByName(@RequestParam String email,

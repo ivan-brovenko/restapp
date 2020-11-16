@@ -79,11 +79,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User addActors(String userEmail, List<Actor> actors) {
+    public User addActors(String userEmail, List<Long> actorsIds) {
         User user = userRepository.findByEmail(userEmail)
                 .orElseThrow(() ->
                         new UserDoesNotExistException("User with email: " + userEmail + " does not exist"));
-        user.getActors().addAll(actors);
+
+//        List
+
+
+//        user.getActors().addAll(actors);
         return user;
     }
 

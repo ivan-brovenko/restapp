@@ -5,5 +5,4 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface ActorRepository extends CrudRepository<Actor, Long> {
     Actor save(Actor actor);
-    Actor findByName(String name);
 }
